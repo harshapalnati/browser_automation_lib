@@ -10,3 +10,4 @@ serde = { version = "1.0", features = ["derive"] }  # For parsing configuration 
 tokio = { version = "1", features = ["full"] }      # For async programming
 log = "0.4"                                         # For logging actions
 rand = "0.8"   #For random delays
+serde_json = "1.0"
