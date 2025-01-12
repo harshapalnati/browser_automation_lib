@@ -4,3 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+
+fantoccini = "0.21"   # For WebDriver-based browser control
+serde = { version = "1.0", features = ["derive"] }  # For parsing configuration files
+tokio = { version = "1", features = ["full"] }      # For async programming
+log = "0.4"                                         # For logging actions
+rand = "0.8"   #For random delays
