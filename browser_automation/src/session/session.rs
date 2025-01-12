@@ -1,5 +1,6 @@
-use fantoccini::{Client, ClientBuilder};
+use fantoccini::{Client, ClientBuilder,Locator};
 use std::error::Error;
+use crate::elements::elements::WebElement;
 
 pub struct BrowserSession
 {
@@ -36,7 +37,10 @@ impl BrowserSession
         Ok(())
     }
 
-
+    pub async fn find_element(&mut self, selector: &str) -> Result<WebElement, Box<dyn Error>> {
+        let element = self.client.find(Locator::Css(selector)).await?;
+        Ok(WebElement { element })
+    }
 }
 
 
@@ -51,6 +55,7 @@ mod test
     #[tokio::test]
     async fn test_navigation()
     {
+        let website_url = "https://indeed.com/?r=us";
        // Create a browser session
        let mut session = BrowserSession::new("https://indeed.com/?r=us").await.unwrap();
 
@@ -58,6 +63,7 @@ mod test
        let navigate_result = session.navigate("https://www.linkedin.com/jobs/").await;
        assert!(navigate_result.is_ok(), "Failed to navigate to Rust website");
 
+        
        // Close the session
        let close_result = session.close().await;
        assert!(close_result.is_ok(), "Failed to close the browser session");
