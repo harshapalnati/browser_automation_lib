@@ -87,7 +87,28 @@ impl WebElement
 }
 
 
+pub async fn is_displayed(&self) -> Result<bool, Box<dyn Error>> {
+    let element_ref = self.element.element_id().to_string(); // Convert ElementRef to String
+    let client = self.element.clone().client(); // Clone the element to avoid moving
+    let result = client
+        .execute(
+            "return arguments[0].offsetWidth > 0 && arguments[0].offsetHeight > 0;",
+            vec![json!(element_ref)],
+        )
+        .await?;
+
+    if let Some(is_visible) = result.as_bool() {
+        Ok(is_visible)
+    } else {
+        Ok(false) // Default to false if the script doesn't return a valid boolean
+    }
 }
+
+
+}
+
+
+
 
 
 #[cfg(test)]
