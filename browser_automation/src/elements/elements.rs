@@ -1,5 +1,6 @@
 use fantoccini::elements::Element;
 use std::error::Error;
+use serde_json::json;
 
 use crate::session::session::BrowserSession;
 
@@ -70,6 +71,20 @@ impl WebElement
         self.element.send_keys(keys).await?;
         Ok(())
     }
+
+    
+   /// Scroll the element into view using JavaScript
+   pub async fn scroll_into_view(&self) -> Result<(), Box<dyn Error>> {
+    let element_ref = self.element.element_id().clone();
+    self.element.clone()
+        .client()
+        .execute(
+            "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });",
+            vec![json!(*element_ref)],
+        )
+        .await?;
+    Ok(())
+}
 
 
 }
