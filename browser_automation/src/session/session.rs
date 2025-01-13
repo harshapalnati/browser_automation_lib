@@ -19,22 +19,33 @@ impl BrowserSession
     }
     
     pub async fn new(website_url: &str) -> Result<Self, Box<dyn Error>> {
-        // Connect to the WebDriver (ensure WebDriver is running locally)
+        // Construct the capabilities map
+        let mut chrome_options = serde_json::Map::new();
+        chrome_options.insert("args".to_string(), serde_json::Value::Array(vec![]));
+    
+        let mut capabilities = serde_json::Map::new();
+        capabilities.insert(
+            "goog:chromeOptions".to_string(),
+            serde_json::Value::Object(chrome_options),
+        );
+    
+        // Connect to the WebDriver
         let client = ClientBuilder::native()
-            .connect("http://localhost:8081") // Adjust port if needed
+            .capabilities(capabilities) // Pass the capabilities as Map<String, Value>
+            .connect("http://localhost:9515")
             .await
             .map_err(|e| {
                 eprintln!("Failed to connect to WebDriver: {}", e);
                 e
             })?;
-
+    
         // Navigate to the specified URL
         client.goto(website_url).await?;
-
+    
         // Wrap the Client in BrowserSession and return
         Ok(Self { client })
     }
-
+    
     pub async fn  navigate(&mut self,url:&str)->Result<(),Box<dyn Error>>
     {
         self.client.goto(url).await?;
