@@ -1,6 +1,6 @@
 [package]
 name = "browser_automation"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 authors = ["Harshavardhan harshapalnati@gmail.com"]
 description = "A modular browser automation library using Fantoccini."
