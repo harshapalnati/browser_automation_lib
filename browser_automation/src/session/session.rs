@@ -9,6 +9,15 @@ pub struct BrowserSession
 
 impl BrowserSession
 {
+
+      /// Sets the browser window size
+      pub async fn set_window_size(&self, width: u32, height: u32) -> Result<(), Box<dyn Error>> {
+        self.client
+            .set_window_rect(0, 0, width, height) // Provide explicit values for all arguments
+            .await?;
+        Ok(())
+    }
+    
     pub async fn new(website_url: &str) -> Result<Self, Box<dyn Error>> {
         // Connect to the WebDriver (ensure WebDriver is running locally)
         let client = ClientBuilder::native()
