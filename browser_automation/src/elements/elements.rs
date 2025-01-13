@@ -66,8 +66,11 @@ impl WebElement
         Ok(())
     }
 
+    pub async fn send_keys(&self, keys: &str) -> Result<(), Box<dyn Error>> {
+        self.element.send_keys(keys).await?;
+        Ok(())
+    }
 
-  
 
 }
 
