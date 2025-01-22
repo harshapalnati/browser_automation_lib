@@ -1,12 +1,13 @@
 [package]
 name = "browser_automation"
-version = "0.1.7"
+version = "0.1.8"
 edition = "2021"
 authors = ["Harshavardhan harshapalnati@gmail.com"]
 description = "A modular browser automation library using Fantoccini."
 homepage = "https://github.com/harshapalnati/browser_automation_lib"
 repository = "https://github.com/harshapalnati/browser_automation_lib"
 license = "MIT"                   # Use an appropriate license
+readme = "README.md"  
 
 
 [dependencies]
